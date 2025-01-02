@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "vector.h"
 
 struct time
 {
@@ -24,9 +25,8 @@ struct train
     int number;
 
     int tickets_num;
-    int* tickets;
-    
-    struct schedule* timetable;
+    vector tickets;
+    vector timetable;
     void (*free)(struct train* it);
 };
 
@@ -39,7 +39,7 @@ struct timetable
 struct linked_list
 {
     int station_id;
-    unsigned int distance;
+    double distance;
     struct city_ststion* station;
     struct linked_list* next;
 };
@@ -49,40 +49,38 @@ struct city_ststion
     int station_id;
     char name[50];
     int trains_num;
-    struct timetable* arrival;
-    struct timetable* departure;
+    vector arrival;
+    vector departure;
     struct linked_list* linked_stations;
 
     void (*free)(struct city_ststion* it);
 };
 
-void train_init(struct train* it, int tickets_num)
+void train_init(struct train* it)
 {
-    it->tickets_num = tickets_num;
-    it->tickets = (int*)malloc(sizeof(int) * tickets_num);
-    memset(it->tickets, 0, sizeof(int) * tickets_num);
-    it->timetable = (struct schedule*)malloc(sizeof(struct schedule) * tickets_num);
+    vector_init(&it->tickets, sizeof(int));
+    vector_init(&it->timetable, sizeof(struct schedule));
     it->free = train_free;
 }
 
 void train_free(struct train* it)
 {
-    free(it->tickets);
-    free(it->timetable);
+    vector_free(&it->tickets);
+    vector_free(&it->timetable);
 }
 
 void city_station_init(struct city_ststion* it)
 {
-    it->arrival = (struct timetable*)malloc(sizeof(struct timetable));
-    it->departure = (struct timetable*)malloc(sizeof(struct timetable));
+    vector_init(&it->arrival, sizeof(struct timetable));
+    vector_init(&it->departure, sizeof(struct timetable));
     it->linked_stations = NULL;
     it->free = city_station_free;
 }
 
 void city_station_free(struct city_ststion* it)
 {
-    free(it->arrival);
-    free(it->departure);
+    vector_free(&it->arrival);
+    vector_free(&it->departure);
 }
 
 #endif
