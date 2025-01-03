@@ -1,0 +1,29 @@
+name: C Build Check
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup working directory
+      run: |
+        pwd
+        ls -la
+    
+    - name: Compile
+      run: |
+        gcc -Wall -g main.c -o main
+        if [ $? -eq 0 ]; then
+          echo "Compilation successful"
+        else
+          echo "Compilation failed"
+          exit 1
+        fi
