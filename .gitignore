@@ -39,3 +39,10 @@
 *.pdf
 *.doc
 *.docs
+
+#Data
+*.rawdat
+*.dat
+
+#Dev
+test.c
