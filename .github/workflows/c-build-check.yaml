@@ -13,17 +13,26 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Setup working directory
+    - name: Install CMake
       run: |
-        pwd
-        ls -la
+        sudo apt-get update
+        sudo apt-get install -y cmake
     
-    - name: Compile
+    - name: Create Build Directory
+      run: mkdir build
+    
+    - name: Configure CMake
       run: |
-        gcc -Wall -g main.c -o main
+        cd build
+        cmake ..
+    
+    - name: Build
+      run: |
+        cd build
+        make
         if [ $? -eq 0 ]; then
-          echo "Compilation successful"
+          echo "Build successful"
         else
-          echo "Compilation failed"
+          echo "Build failed"
           exit 1
         fi
