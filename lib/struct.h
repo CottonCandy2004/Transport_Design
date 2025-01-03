@@ -56,6 +56,12 @@ struct city_ststion
     void (*free)(struct city_ststion* it);
 };
 
+void train_init(struct train* it);
+void train_free(struct train* it);
+
+void city_station_init(struct city_ststion* it);
+void city_station_free(struct city_ststion* it);
+
 void train_init(struct train* it)
 {
     vector_init(&it->tickets, sizeof(int));
