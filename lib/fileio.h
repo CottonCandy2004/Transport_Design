@@ -51,7 +51,7 @@ void read_route(FILE* file, vector* stations) {
     trim_newline(line);
     char* route_name = strtok(line, ",");
     int station_count = atoi(strtok(NULL, ","));
-    
+    printf("%s: %d站\n", route_name, station_count);
     int prev_station_idx = -1;
     double prev_distance = 0;
     
@@ -86,8 +86,7 @@ void read_routes_file(const char* filename, vector* all_stations) {
         return;
     }
 
-    char line[MAX_LINE_LENGTH];
-    while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
+    while (!feof(file)) {
         read_route(file, all_stations);
     }
     
