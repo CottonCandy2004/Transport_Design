@@ -64,7 +64,7 @@ void find_shortest_path(vector* stations, const char* start, const char* end, Pa
 }
 
 // 遍历最短路径并返回总距离
-double traverse_path(vector* stations, const PathInfo* path_info, int start_idx, int end_idx) {
+double traverse_path(vector* stations, const PathInfo* path_info, int start_idx, int end_idx, bool printable) {
     if (start_idx == -1 || end_idx == -1 || path_info->prev[end_idx] == -1) {
         return -1;
     }
@@ -78,14 +78,15 @@ double traverse_path(vector* stations, const PathInfo* path_info, int start_idx,
         curr_idx = path_info->prev[curr_idx];
     }
     
-    printf("路径: ");
-    for (int i = path_len - 1; i >= 0; i--) {
-        struct city_ststion* curr_station = 
-            (struct city_ststion*)vector_get(stations, path[i]);
-        printf("%s", curr_station->name);
-        if (i > 0) printf(" -> ");
+    if (printable){
+        printf("路径: ");
+        for (int i = path_len - 1; i >= 0; i--) {
+            struct city_ststion* curr_station = 
+                (struct city_ststion*)vector_get(stations, path[i]);
+            printf("%s", curr_station->name);
+            if (i > 0) printf(" -> ");
+        }
+        printf("\n");
     }
-    printf("\n");
-    
     return path_info->dist[end_idx];
 }

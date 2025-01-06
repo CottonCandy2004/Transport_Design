@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "fileio.h"
+#include "train.h"
 
+// 去掉字符串末尾的换行符
 void trim_newline(char* str) {
     int len = strlen(str);
     while (len > 0 && (str[len-1] == '\n' || str[len-1] == '\r')) {
@@ -11,6 +13,7 @@ void trim_newline(char* str) {
     }
 }
 
+// 在站点数组中查找站点索引
 int find_or_add_station(vector* stations, const char* station_name) {
     for (int i = 0; i < stations->size; i++) {
         struct city_ststion* station = (struct city_ststion*)vector_get(stations, i);
@@ -29,6 +32,7 @@ int find_or_add_station(vector* stations, const char* station_name) {
     return stations->size - 1;
 }
 
+// 添加站点之间的连接
 void add_station_link(struct city_ststion* from_station, struct city_ststion* to_station, double distance) {
     struct linked_list* new_link = (struct linked_list*)malloc(sizeof(struct linked_list));
     new_link->station_id = to_station->station_id;
@@ -38,6 +42,7 @@ void add_station_link(struct city_ststion* from_station, struct city_ststion* to
     from_station->linked_stations = new_link;
 }
 
+// 读取一条路线
 void read_route(FILE* file, vector* stations) {
     char line[MAX_LINE_LENGTH];
     if (!fgets(line, MAX_LINE_LENGTH, file)) return;
@@ -73,6 +78,7 @@ void read_route(FILE* file, vector* stations) {
     }
 }
 
+// 读取路线文件
 void read_routes_file(const char* filename, vector* all_stations) {
     FILE* file = fopen(filename, "r");
     if (!file) {
@@ -86,4 +92,49 @@ void read_routes_file(const char* filename, vector* all_stations) {
     
     printf("成功读取了 %d 个站点\n", all_stations->size);
     fclose(file);
+}
+
+// 读取火车信息
+void read_trains_file(const char* filename, vector* trains, vector* stations) {
+    FILE* file = fopen(filename, "r");
+    if (!file) {
+        printf("无法打开文件: %s\n", filename);
+        return;
+    }
+
+    char line[MAX_LINE_LENGTH];
+    while (fgets(line, MAX_LINE_LENGTH, file)) {
+        trim_newline(line);
+        
+        char* train_name = strtok(line, ",");
+        
+        // 为火车分配编号（使用trains->size作为唯一标识）
+        int train_number = trains->size;
+        add_train(trains, train_name, train_number);
+
+        while (1) {
+            char* station_name = strtok(NULL, ",");
+            if (!station_name) break;
+            
+            char* arrival_str = strtok(NULL, ",");
+            char* departure_str = strtok(NULL, ",");
+            
+            if (!arrival_str || !departure_str) break;
+
+            int station_idx = find_or_add_station(stations, station_name);
+            if (station_idx != -1) {
+                struct city_ststion* station = 
+                    (struct city_ststion*)vector_get(stations, station_idx);
+                
+                struct time arrival, departure;
+                parse_time(arrival_str, &arrival);
+                parse_time(departure_str, &departure);
+                
+                add_station_schedule(station, train_number, &arrival, &departure);
+            }
+        }
+    }
+
+    fclose(file);
+    printf("成功读取了 %d 趟列车信息\n", trains->size);
 }

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// 基本操作函数实现
+// 初始化vector
 void vector_init(struct vector* v, size_t element_size) {
     v->data = malloc(VECTOR_INIT_CAPACITY * element_size);
     if (v->data == NULL) {
@@ -19,6 +19,7 @@ void vector_init(struct vector* v, size_t element_size) {
     v->get = vector_get;
 }
 
+// 释放vector
 void vector_free(struct vector* v) {
     if (v && v->data) {
         free(v->data);
@@ -28,6 +29,7 @@ void vector_free(struct vector* v) {
     }
 }
 
+// 向vector中添加元素
 void vector_push_back(struct vector* v, void* element) {
     if (!v || !element) return;
     
@@ -43,16 +45,19 @@ void vector_push_back(struct vector* v, void* element) {
     v->size++;
 }
 
+// 从vector中删除最后一个元素
 void vector_pop_back(struct vector* v) {
     if (v->size > 0) {
         v->size--;
     }
 }
 
+// 获取vector的大小
 int vector_size(struct vector* v) {
     return v->size;
 }
 
+// 获取vector中的元素
 void* vector_get(struct vector* v, int index) {
     if (index >= 0 && index < v->size) {
         return (char*)v->data + index * v->element_size;

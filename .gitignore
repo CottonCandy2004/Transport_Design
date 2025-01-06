@@ -46,4 +46,4 @@ build
 *.dat
 
 #Dev
-src/test.c
+/test/*

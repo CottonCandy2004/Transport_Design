@@ -16,7 +16,13 @@ include_directories(${CMAKE_SOURCE_DIR}/lib)
 
 # 添加源文件
 add_executable(${PROJECT_NAME}
+    src/struct.c
+    src/vector.c
+    src/fileio.c
+    src/station.c
+    src/train.c
     src/main.c
+    # test/test_train.c
 )
 
 # 设置C标准
