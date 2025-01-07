@@ -59,6 +59,7 @@ void train_free(struct train* it);
 void city_station_init(struct city_ststion* it);
 void city_station_free(struct city_ststion* it);
 
-
+void add_train_schedule(struct train* train, const char* station, struct time arrival, struct time departure);
+struct schedule* get_train_schedule(struct train* train, int index);
 
 #endif

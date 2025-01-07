@@ -11,7 +11,7 @@ void add_station_schedule(struct city_ststion* station, int train_number,
                          struct time* arrival, struct time* departure);
 
 // 向vector中添加火车信息
-void add_train(vector* trains, const char* name, int number);
+void add_train(vector* trains, const char* name, int number, int station_num);
 
 // 根据火车编号查找火车
 struct train* find_train(vector* trains, int number);
