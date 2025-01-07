@@ -27,12 +27,17 @@ void add_station_schedule(struct city_ststion* station, int train_number,
     station->trains_num++;
 }
 
-void add_train(vector* trains, const char* name, int number) {
+void add_train(vector* trains, const char* name, int number, int station_num) {
     struct train new_train;
     train_init(&new_train);
     strcpy(new_train.name, name);
     new_train.number = number;
-    new_train.tickets_num = 0;
+    new_train.tickets_num = 600;
+    vector tickets;
+    vector_init(&tickets, sizeof(int));
+    for (int i = 0; i < station_num; i++) {
+        vector_push_back(&tickets, 0);
+    }
     vector_push_back(trains, &new_train);
 }
 
