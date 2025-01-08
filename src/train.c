@@ -18,12 +18,12 @@ void add_station_schedule(struct city_ststion* station, int train_number,
     struct timetable arr_time = {train_number, *arrival};
     struct timetable dep_time = {train_number, *departure};
     
-    if (arrival->hour != -1) {
+    // if (arrival->hour != -1) {
         vector_push_back(&station->arrival, &arr_time);
-    }
-    if (departure->hour != -1) {
+    // }
+    // if (departure->hour != -1) {
         vector_push_back(&station->departure, &dep_time);
-    }
+    // }
     station->trains_num++;
 }
 
@@ -49,4 +49,14 @@ struct train* find_train(vector* trains, int number) {
         }
     }
     return NULL;
+}
+
+int find_train_index(vector* trains, const char* name) {
+    for (int i = 0; i < trains->size; i++) {
+        struct train* t = (struct train*)vector_get(trains, i);
+        if (strcmp(t->name, name) == 0) {
+            return i;
+        }
+    }
+    return -1;
 }

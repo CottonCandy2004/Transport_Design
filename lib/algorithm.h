@@ -1,5 +1,8 @@
 #ifndef ALGORITHM_H
 #define ALGORITHM_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 char *summonsha(char *str_)
 {
