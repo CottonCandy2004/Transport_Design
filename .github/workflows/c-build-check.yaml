@@ -28,9 +28,9 @@ jobs:
       run: |
         cd build
         mingw32-make
-        if %ERRORLEVEL% == 0 (
-          echo "Build successful"
-        ) else (
-          echo "Build failed"
+        if ($LASTEXITCODE -eq 0) {
+          Write-Host "Build successful"
+        } else {
+          Write-Host "Build failed"
           exit 1
-        )
+        }
