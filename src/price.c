@@ -8,6 +8,7 @@
 #include "station.h"
 #include "train.h"
 #include <stdbool.h>
+#include "price.h"
 
 int countprice(vector *stations, const char *start, const char *end, PathInfo *path_info, vector *train, int trainidx)
 {
@@ -19,14 +20,14 @@ int countprice(vector *stations, const char *start, const char *end, PathInfo *p
     s = train1->timetable.size;
     for (; i < s; i++)
     {
-        struct schedule *s1 = (struct train *)vector_get(&train1->timetable, i);
+        struct schedule *s1 = (struct schedule *)vector_get(&train1->timetable, i);
         if (strcmp(s1->station, start) == 0)
             break;
     }
 
     for (; j < s; j++)
     {
-        struct schedule *s1 = (struct train *)vector_get(&train1->timetable, j);
+        struct schedule *s1 = (struct schedule *)vector_get(&train1->timetable, j);
         if (strcmp(s1->station, end) == 0)
             break;
     }

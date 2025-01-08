@@ -3,10 +3,13 @@
 #include <stdlib.h>
 #include "ui_terminal.h"
 #include "ui.h"
+#include <windows.h>  // 添加头文件
 
 void flush(char *notice, char **arr, int length, int *choice)
 {
     system("cls");
+    SetConsoleOutputCP(65001);  // 添加这行
+    fflush(stdout);  // 添加这行
 
     SetColor(15, 0);
     printf("欢迎使用全国铁路网络售票系统\nWelcome to the National Railway Network Ticketing System\n\n%s\n", notice);
@@ -111,6 +114,7 @@ void orginize_input(int *choice, int *satus, const int *length)
 
 int ui_choice(char *notice, char **arr, int length)
 {
+    SetConsoleOutputCP(65001);  // 添加这行
     HideConsoleCursor();
     int choice = 0, satus = 0;
     while (1)
