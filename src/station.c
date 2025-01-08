@@ -19,7 +19,7 @@ void find_shortest_path(vector* stations, const char* start, const char* end, Pa
     int end_idx = find_station_index(stations, end);
     
     if (start_idx == -1 || end_idx == -1) {
-        printf("找不到起点或终点站：%s -> %s\n", start, end);
+        printf("ERR: 找不到起点或终点站：%s -> %s\n", start, end);
         return;
     }
 

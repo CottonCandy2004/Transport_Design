@@ -21,6 +21,9 @@ add_executable(${PROJECT_NAME}
     src/fileio.c
     src/station.c
     src/train.c
+    src/ui_terminal.c
+    src/ui.c
+    src/lookup.c
     src/main.c
     # test/test_train.c
 )

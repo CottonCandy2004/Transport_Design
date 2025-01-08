@@ -16,4 +16,6 @@ void add_train(vector* trains, const char* name, int number, int station_num);
 // 根据火车编号查找火车
 struct train* find_train(vector* trains, int number);
 
+// 根据火车名称查找火车编号
+int find_train_index(vector* trains, const char* name);
 #endif

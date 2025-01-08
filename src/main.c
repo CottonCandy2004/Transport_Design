@@ -2,10 +2,13 @@
 #include <stdlib.h>
 #include "ui.h"
 #include "auth.h"
+#include "fileio.h"
+#include "lookup.h"
 
 int main()
 {
     SetConsoleOutputCP(65001);
+    SetConsoleCP(65001);
     system("cls");
     int status = auth();
     while (status != 200)
@@ -21,8 +24,14 @@ int main()
             return 0;
         status = auth();
     }
+    vector allstations;
+    vector_init(&allstations, sizeof(struct city_ststion));
+    read_routes_file("../data/Citys.rawdat", &allstations);
+    vector trains;
+    vector_init(&trains, sizeof(struct train));
+    read_trains_file("../data/Trains.rawdat", &trains, &allstations);
     char *notice1 = "请选择您的操作：";
-    char *choice[3] = {"1. 售票", "2.", "3. 退出系统"};
+    char *choice[3] = {"1. 查询", "2.", "3. 退出系统"};
     int result_colour = 0;
     while (1)
     {
@@ -30,7 +39,7 @@ int main()
         switch(ch)
         {
         case 0:
-
+            lookup_menu(&allstations, &trains);
             break;
         case 1:
 
