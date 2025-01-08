@@ -137,6 +137,10 @@ void read_trains_file(const char* filename, vector* trains, vector* stations) {
             }
         }
         current_train->tickets_num = station_num;
+        for (int i = 0; i < station_num; i++) {
+            int buff = 0;
+            vector_push_back(&current_train->tickets, &buff);
+        }
     }
 
     fclose(file);

@@ -23,7 +23,11 @@ add_executable(${PROJECT_NAME}
     src/train.c
     src/ui_terminal.c
     src/ui.c
+    src/algorithm.c
+    src/auth.c
     src/lookup.c
+    src/price.c
+    src/sold.c
     src/main.c
     # test/test_train.c
 )

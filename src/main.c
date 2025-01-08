@@ -4,6 +4,9 @@
 #include "auth.h"
 #include "fileio.h"
 #include "lookup.h"
+#include "sold.h"
+#include <windows.h>
+#include "ui_terminal.h"
 
 int main()
 {
@@ -31,7 +34,7 @@ int main()
     vector_init(&trains, sizeof(struct train));
     read_trains_file("../data/Trains.rawdat", &trains, &allstations);
     char *notice1 = "请选择您的操作：";
-    char *choice[3] = {"1. 查询", "2.", "3. 退出系统"};
+    char *choice[3] = {"1. 查询", "2.售票", "3. 退出系统"};
     int result_colour = 0;
     while (1)
     {
@@ -42,7 +45,7 @@ int main()
             lookup_menu(&allstations, &trains);
             break;
         case 1:
-
+            sold_menu(&trains, &allstations);
             break;
         case 2:
             exit(0);
