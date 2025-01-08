@@ -68,7 +68,9 @@ void find_direct_trains(vector* stations, vector* trains, const char* start, con
             
             if (start_time->trains_num == end_time->trains_num && start_time->time.hour*60+start_time->time.minute < end_time->time.hour*60+end_time->time.minute) {
                 found = 1;
-                printf("%s %02d:%02d --%s--> %s %02d:%02d\n", start, start_time->time.hour, start_time->time.minute, ((struct train*)trains->get(trains, start_time->trains_num))->name, end, end_time->time.hour, end_time->time.minute, end);
+                int travel_time = end_time->time.hour*60+end_time->time.minute-start_time->time.hour*60-start_time->time.minute;
+                struct time travel = {travel_time/60, travel_time%60};
+                printf("%s %02d:%02d --%s（%d小时%d分钟）--> %s %02d:%02d\n", start, start_time->time.hour, start_time->time.minute, ((struct train*)trains->get(trains, start_time->trains_num))->name, travel.hour, travel.minute, end, end_time->time.hour, end_time->time.minute, end);
             }
         }
     }
